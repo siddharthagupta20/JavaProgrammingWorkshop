@@ -25,7 +25,16 @@ public class TicTacToeGame {
 		char option;
 		System.out.println("Enter X or O.");
 		option = sc.next().charAt(0);
-		return option;
+		boolean b = true;
+		while (b)
+			if (option == 'X' || option == 'x' || option == 'O' || option == 'o')
+				return option;
+			else {
+				System.out.println("Enter X or O.");
+				option = sc.next().charAt(0);
+				b = false;
+			}
+		return '\0';
 	}
 
 	public void showBoard() {
@@ -86,7 +95,10 @@ public class TicTacToeGame {
 		System.out.println("Want to play first?(Y/N)");
 		char first = t.sc.next().charAt(0);
 		if (first == 'Y' || first == 'y') {
-			t.playerOp = t.chooseOption();
+			if (t.chooseOption() != '\0')
+				t.playerOp = t.chooseOption();
+			else
+				System.out.println("Not correct entry");
 			t.movePlayer(t);
 			t.compOp = t.playerOp == 'O' ? 'X' : 'O';
 			t.moveComp(t);

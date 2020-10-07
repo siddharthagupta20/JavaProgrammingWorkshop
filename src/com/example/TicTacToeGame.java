@@ -29,6 +29,7 @@ public class TicTacToeGame {
 		option = sc.next().charAt(0);
 		boolean b = true;
 		while (b)
+
 			if (option == 'X' || option == 'x' || option == 'O' || option == 'o') {
 				if (option == 'x')
 					option = 'X';
@@ -104,7 +105,9 @@ public class TicTacToeGame {
 		TicTacToeGame t = new TicTacToeGame();
 
 		System.out.println("Welcome to TicTacToe.");
+
 		t.showBoard();
+
 		System.out.println("1.Want to play first?(Y/N)");
 		System.out.println("2.Want to toss?");
 		int chances = t.sc.nextInt();
@@ -131,6 +134,7 @@ public class TicTacToeGame {
 			char op = t.chooseOption();
 			if (op != '\0')
 				t.playerOp = op;
+
 			t.compOp = t.playerOp == 'O' ? 'X' : 'O';
 			t.movePlayer(t);
 			t.moveComp(t);

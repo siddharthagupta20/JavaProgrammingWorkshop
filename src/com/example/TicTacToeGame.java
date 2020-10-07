@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToeGame {
@@ -36,6 +37,42 @@ public class TicTacToeGame {
 
 	}
 
+	public void movePlayer(TicTacToeGame t) {
+		System.out.println("Enter the position(1-9): ");
+		int move = sc.nextInt();
+		for (int i = 1; i < 10; i++)
+			if (move == i) {
+
+				boolean b = true;
+				while (b) {
+
+					System.out.println("Enter the position(1-9): ");
+					move = sc.nextInt();
+					if (position[move] == '\0') {
+						position[move] = t.playerOp;
+					} else {
+						b = false;
+					}
+
+				}
+			}
+	}
+
+	public void moveComp(TicTacToeGame t) {
+		Random r = new Random();
+		int move = r.nextInt(10);
+		for (int i = 1; i < 10; i++)
+			if (move == i) {
+				boolean b = true;
+				while (b)
+					if (position[move] == '\0')
+						position[move] = t.compOp;
+					else
+						b = false;
+
+			}
+	}
+
 	public static void main(String[] args) {
 
 		TicTacToeGame t = new TicTacToeGame();
@@ -46,7 +83,9 @@ public class TicTacToeGame {
 		char first = t.sc.next().charAt(0);
 		if (first == 'Y' || first == 'y') {
 			t.playerOp = t.chooseOption();
+			t.movePlayer(t);
 			t.compOp = t.playerOp == 'O' ? 'X' : 'O';
+			t.moveComp(t);
 
 		}
 

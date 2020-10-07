@@ -46,14 +46,15 @@ public class TicTacToeGame {
 				boolean b = true;
 				while (b) {
 
-					System.out.println("Enter the position(1-9): ");
-					move = sc.nextInt();
+					
 					if (position[move] == '\0') {
 						position[move] = t.playerOp;
-					} else {
 						b = false;
 					}
-
+					else {
+						System.out.println("Enter the position(1-9): ");
+						move = sc.nextInt();
+					}
 				}
 			}
 	}
@@ -65,10 +66,12 @@ public class TicTacToeGame {
 			if (move == i) {
 				boolean b = true;
 				while (b)
-					if (position[move] == '\0')
+					if (position[move] == '\0') {
 						position[move] = t.compOp;
-					else
 						b = false;
+					}
+					else
+						move = r.nextInt(10);
 
 			}
 	}
@@ -86,6 +89,7 @@ public class TicTacToeGame {
 			t.movePlayer(t);
 			t.compOp = t.playerOp == 'O' ? 'X' : 'O';
 			t.moveComp(t);
+			t.showBoard();
 
 		}
 

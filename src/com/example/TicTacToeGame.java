@@ -41,6 +41,7 @@ public class TicTacToeGame {
 		TicTacToeGame t = new TicTacToeGame();
 
 		System.out.println("Welcome to TicTacToe.");
+
 		t.showBoard();
 		System.out.println("Want to play first?(Y/N)");
 		char first = t.sc.next().charAt(0);

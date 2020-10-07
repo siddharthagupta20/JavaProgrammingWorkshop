@@ -172,6 +172,7 @@ public class TicTacToeGame {
 
 			t.compOp = t.playerOp == 'O' ? 'X' : 'O';
 			t.movePlayer(t);
+			t.showBoard();
 			boolean playerTurn = true;
 			while (t.winOrNot(t) == 3) {
 				if (playerTurn) {
@@ -180,7 +181,7 @@ public class TicTacToeGame {
 					t.showBoard();
 					if (t.winOrNot(t) == 2) {
 						System.out.println("Tie");
-					} else
+					} else if(t.winOrNot(t) == 1)
 						System.out.println("Player Wins.");
 				} else {
 					t.movePlayer(t);
@@ -188,7 +189,7 @@ public class TicTacToeGame {
 					t.showBoard();
 					if (t.winOrNot(t) == 2) {
 						System.out.println("Tie");
-					} else
+					} else if(t.winOrNot(t) == 1)
 						System.out.println("Computer Wins.");
 				}
 			}
@@ -197,6 +198,7 @@ public class TicTacToeGame {
 			t.compOp = 'X';
 			t.playerOp = 'O';
 			t.moveComp(t);
+			t.showBoard();
 			boolean playerTurn = false;
 			while (t.winOrNot(t) == 3) {
 				if (playerTurn) {
@@ -205,7 +207,7 @@ public class TicTacToeGame {
 					t.showBoard();
 					if (t.winOrNot(t) == 2) {
 						System.out.println("Tie");
-					} else
+					} else if(t.winOrNot(t) == 1)
 						System.out.println("Player Wins.");
 				} else {
 					t.movePlayer(t);
@@ -213,7 +215,7 @@ public class TicTacToeGame {
 					t.showBoard();
 					if (t.winOrNot(t) == 2) {
 						System.out.println("Tie");
-					} else
+					} else if(t.winOrNot(t) == 1)
 						System.out.println("Computer Wins.");
 				}
 			}

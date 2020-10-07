@@ -5,7 +5,9 @@ import java.util.Scanner;
 public class TicTacToeGame {
 
 	private char[] position;
-	public Scanner sc;
+	private Scanner sc;
+	private char playerOp;
+	private char compOp;
 
 	public TicTacToeGame() {
 		// TODO Auto-generated constructor stub
@@ -14,6 +16,8 @@ public class TicTacToeGame {
 			position[i] = '\0';
 		}
 		sc = new Scanner(System.in);
+		playerOp = '\0';
+		compOp = '\0';
 	}
 
 	public char chooseOption() {
@@ -28,7 +32,12 @@ public class TicTacToeGame {
 		TicTacToeGame t = new TicTacToeGame();
 
 		System.out.println("Welcome to TicTacToe.");
-		t.chooseOption();
+
+		System.out.println("Want to play first?(Y/N)");
+		if ((t.sc.next().charAt(0)) == 'Y' || (t.sc.next().charAt(0)) == 'y') {
+			t.playerOp = t.chooseOption();
+			t.compOp = t.playerOp == 'O' ? 'X' : 'O';
+		}
 
 	}
 

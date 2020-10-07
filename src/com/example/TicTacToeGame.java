@@ -12,7 +12,7 @@ public class TicTacToeGame {
 	public TicTacToeGame() {
 		// TODO Auto-generated constructor stub
 		position = new char[10];
-		for (int i = 0; i <= 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			position[i] = '\0';
 		}
 		sc = new Scanner(System.in);
@@ -27,16 +27,28 @@ public class TicTacToeGame {
 		return option;
 	}
 
+	public void showBoard() {
+		System.out.println(position[1] + "|" + position[2] + "|" + position[3]);
+		System.out.println("-------");
+		System.out.println(position[4] + "|" + position[5] + "|" + position[6]);
+		System.out.println("-------");
+		System.out.println(position[7] + "|" + position[8] + "|" + position[9]);
+
+	}
+
 	public static void main(String[] args) {
 
 		TicTacToeGame t = new TicTacToeGame();
 
 		System.out.println("Welcome to TicTacToe.");
 
+		t.showBoard();
 		System.out.println("Want to play first?(Y/N)");
-		if ((t.sc.next().charAt(0)) == 'Y' || (t.sc.next().charAt(0)) == 'y') {
+		char first = t.sc.next().charAt(0);
+		if (first == 'Y' || first == 'y') {
 			t.playerOp = t.chooseOption();
 			t.compOp = t.playerOp == 'O' ? 'X' : 'O';
+
 		}
 
 	}

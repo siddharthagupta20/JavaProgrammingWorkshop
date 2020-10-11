@@ -115,42 +115,41 @@ public class TicTacToeGame {
 		// for winning
 
 		List<Integer> positions = new ArrayList<Integer>();
-			for (int i = 1; i < 10; i++) {
-				if (position[i] == c) {
-					positions.add(i);
-				}
+		for (int i = 1; i < 10; i++) {
+			if (position[i] == c) {
+				positions.add(i);
 			}
-			System.out.println(positions);
-
-			// horizontal
-			for (List<Integer> l : winningHorizontal) {
-				if (positions.containsAll(l))
-					return 1;
-			}
-			for (List<Integer> l : winningVertical) {
-				if (positions.containsAll(l))
-					return 1;
-			}
-			for (List<Integer> l : winningDiagonal) {
-				if (positions.containsAll(l))
-					return 1;
-			}
-			// for tie and change turn
-			boolean b = false;
-			for (int i1 = 1; i1 < 10; i1++) {
-				if (position[i1] == '\0') {
-					b = true;
-					break;
-				}
-			}
-			if (b)
-				return 3;// change turn
-			else
-				return 2;// tie
-		
 		}
-		
-	
+		System.out.println(positions);
+
+		// horizontal
+		for (List<Integer> l : winningHorizontal) {
+			if (positions.containsAll(l))
+				return 1;
+		}
+		for (List<Integer> l : winningVertical) {
+			if (positions.containsAll(l))
+				return 1;
+		}
+		for (List<Integer> l : winningDiagonal) {
+			if (positions.containsAll(l))
+				return 1;
+		}
+		// for tie and change turn
+		boolean b = false;
+		for (int i1 = 1; i1 < 10; i1++) {
+			if (position[i1] == '\0') {
+				b = true;
+				break;
+			}
+		}
+		if (b)
+			return 3;// change turn
+		else
+			return 2;// tie
+
+	}
+
 	public List<Integer> cheats(char c) {
 		List<List<Integer>> willWinHori = Arrays.asList(Arrays.asList(1, 2), Arrays.asList(2, 3), Arrays.asList(1, 3),
 				Arrays.asList(4, 5), Arrays.asList(5, 6), Arrays.asList(4, 6), Arrays.asList(7, 8), Arrays.asList(8, 9),
@@ -191,13 +190,40 @@ public class TicTacToeGame {
 							- positions.stream().reduce(0, (n1, n2) -> n1 + n2));
 			}
 		}
-		return reqPos.stream().filter(n->this.isEmpty(n)).collect(Collectors.toList());
+		return reqPos.stream().filter(n -> this.isEmpty(n)).collect(Collectors.toList());
 
 	}
+
+	public List<Integer> takingCorners() {
+		List<Integer> corners = new ArrayList<Integer>();
+
+		if (position[1] == '\0')
+			corners.add(1);
+		if (position[3] == '\0')
+			corners.add(3);
+		if (position[7] == '\0')
+			corners.add(7);
+		if (position[9] == '\0')
+			corners.add(9);
+		return corners;
+	}
+
+	public void movingLogic(TicTacToeGame t, char c) {
+		if (!t.cheats(c).isEmpty())
+			System.out.println("Take these positions immediatly: " + t.cheats(c));
+		else {
+			if (!t.takingCorners().isEmpty())
+				System.out.println("Choose corners: " + t.takingCorners());
+			else
+				System.out.println("Move Anywhere. Be offensive!!!");
+		}
+
+	}
+
 	public boolean isEmpty(int pos) {
-		if(position[pos]=='\0')
+		if (position[pos] == '\0')
 			return true;
-		else 
+		else
 			return false;
 	}
 
@@ -272,7 +298,7 @@ public class TicTacToeGame {
 					continueGame = false;
 					break;
 				case 3:
-					System.out.println("You can Move to these locations: "+t.cheats(t.compOp));
+					t.movingLogic(t, t.compOp);
 					t.movePlayer(t);
 					playerTurnDone = true;
 					t.showBoard();

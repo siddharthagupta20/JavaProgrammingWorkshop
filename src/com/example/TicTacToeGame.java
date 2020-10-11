@@ -61,13 +61,11 @@ public class TicTacToeGame {
 				while (true) {
 					if (position[move] == '\0') {
 						position[move] = t.playerOp;
-						System.out.println("Running");
 						break;
 
 					} else {
 						System.out.println("Enter the position(1-9): ");
 						move = sc.nextInt();
-						System.out.println("not");
 						continue;
 					}
 				}
@@ -144,78 +142,57 @@ public class TicTacToeGame {
 		System.out.println("1.Want to play first?(Y/N)");
 		System.out.println("2.Want to toss?");
 		int chances = t.sc.nextInt();
-		boolean b = true;
+		boolean playerStart = true;
 		switch (chances) {
 		case 1:
 			System.out.println("Enter(Y/N):");
 			char first = t.sc.next().charAt(0);
 			if (first == 'Y' || first == 'y')
-				b = true;
+				playerStart = true;
 			else if (first == 'n' || first == 'N')
-				b = false;
+				playerStart = false;
 
 			break;
 		case 2:
-			b = t.tossCoin(t);
+			playerStart = t.tossCoin(t);
 			break;
 		default:
 			System.out.println("No option");
 		}
-
-		if (b) {
+		boolean playerTurn;
+		if (playerStart) {
 			char op = t.chooseOption();
 			if (op != '\0')
 				t.playerOp = op;
 			t.compOp = t.playerOp == 'O' ? 'X' : 'O';
 			t.movePlayer(t);
 			t.showBoard();
-			boolean playerTurn = true;
-			while (t.winOrNot(t) == 3) {
-				if (playerTurn) {
-					t.moveComp(t);
-					playerTurn = false;
-					t.showBoard();
-					if (t.winOrNot(t) == 2) {
-						System.out.println("Tie");
-					} else if(t.winOrNot(t) == 1)
-						System.out.println("Player Wins.");
-				} else {
-					t.movePlayer(t);
-					playerTurn = true;
-					t.showBoard();
-					if (t.winOrNot(t) == 2) {
-						System.out.println("Tie");
-					} else if(t.winOrNot(t) == 1)
-						System.out.println("Computer Wins.");
-				}
-			}
-
+			playerTurn = true;
 		} else {
 			t.compOp = 'X';
 			t.playerOp = 'O';
 			t.moveComp(t);
 			t.showBoard();
-			boolean playerTurn = false;
-			while (t.winOrNot(t) == 3) {
-				if (playerTurn) {
-					t.moveComp(t);
-					playerTurn = false;
-					t.showBoard();
-					if (t.winOrNot(t) == 2) {
-						System.out.println("Tie");
-					} else if(t.winOrNot(t) == 1)
-						System.out.println("Player Wins.");
-				} else {
-					t.movePlayer(t);
-					playerTurn = true;
-					t.showBoard();
-					if (t.winOrNot(t) == 2) {
-						System.out.println("Tie");
-					} else if(t.winOrNot(t) == 1)
-						System.out.println("Computer Wins.");
-				}
+			playerTurn = false;
+		}
+		while (t.winOrNot(t) == 3) {
+			if (playerTurn) {
+				t.moveComp(t);
+				playerTurn = false;
+				t.showBoard();
+				if (t.winOrNot(t) == 2) {
+					System.out.println("Tie");
+				} else if (t.winOrNot(t) == 1)
+					System.out.println("Player Wins.");
+			} else {
+				t.movePlayer(t);
+				playerTurn = true;
+				t.showBoard();
+				if (t.winOrNot(t) == 2) {
+					System.out.println("Tie");
+				} else if (t.winOrNot(t) == 1)
+					System.out.println("Computer Wins.");
 			}
-
 		}
 	}
 }

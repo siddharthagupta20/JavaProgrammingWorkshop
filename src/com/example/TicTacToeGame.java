@@ -86,7 +86,7 @@ public class TicTacToeGame {
 
 	public void moveComp(TicTacToeGame t) {
 
-		int move = r.nextInt(10);
+		int move = r.nextInt(9)+1;
 		for (int i = 1; i < 10; i++) {
 			while (move == 0)
 				move = r.nextInt(10);
@@ -104,7 +104,7 @@ public class TicTacToeGame {
 	}
 
 	public boolean tossCoin(TicTacToeGame t) {
-		int toss = r.nextInt(1);
+		int toss = r.nextInt(2);
 		if (toss == 1)
 			return true;
 		else

@@ -298,7 +298,7 @@ public class TicTacToeGame {
 			playerTurnDone = false;
 		}
 		boolean continueGame = true;
-		while (continueGame) {
+		while (continueGame) {//condition for continuing game till win or tie 
 			if (playerTurnDone) {
 				switch (t.winOrNot(t, t.playerOp)) {
 				case 1:

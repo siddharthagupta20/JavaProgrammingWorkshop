@@ -1,7 +1,11 @@
 package com.example;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class TicTacToeGame {
 
@@ -10,6 +14,12 @@ public class TicTacToeGame {
 	private char playerOp;
 	private char compOp;
 	private Random r;
+
+	List<List<Integer>> winningHorizontal = Arrays.asList(Arrays.asList(1, 2, 3), Arrays.asList(4, 5, 6),
+			Arrays.asList(7, 8, 9));
+	List<List<Integer>> winningVertical = Arrays.asList(Arrays.asList(1, 4, 7), Arrays.asList(2, 5, 8),
+			Arrays.asList(3, 6, 9));
+	List<List<Integer>> winningDiagonal = Arrays.asList(Arrays.asList(1, 5, 9), Arrays.asList(3, 5, 7));
 
 	public TicTacToeGame() {
 		// TODO Auto-generated constructor stub
@@ -102,36 +112,94 @@ public class TicTacToeGame {
 
 	}
 
-	public int winOrNot(TicTacToeGame t) {
+	public int winOrNot(TicTacToeGame t, char c) {
 		// for winning
-		// horizontal
-		for (int i = 1; i <= 7; i = i + 3) {
-			if (position[i] == position[i + 1] && position[i] == position[i + 2] && position[i] != '\0')
-				return 1;
+
+		List<Integer> positions = new ArrayList<Integer>();
+			for (int i = 1; i < 10; i++) {
+				if (position[i] == c) {
+					positions.add(i);
+				}
+			}
+			System.out.println(positions);
+
+			// horizontal
+			for (List<Integer> l : winningHorizontal) {
+				if (positions.containsAll(l))
+					return 1;
+			}
+			for (List<Integer> l : winningVertical) {
+				if (positions.containsAll(l))
+					return 1;
+			}
+			for (List<Integer> l : winningDiagonal) {
+				if (positions.containsAll(l))
+					return 1;
+			}
+			// for tie and change turn
+			boolean b = false;
+			for (int i1 = 1; i1 < 10; i1++) {
+				if (position[i1] == '\0') {
+					b = true;
+					break;
+				}
+			}
+			if (b)
+				return 3;// change turn
+			else
+				return 2;// tie
+		
 		}
-		// vertical
-		for (int i = 1; i < 4; i++) {
-			if (position[i] == position[i + 3] && position[i] == position[i + 6] && position[i] != '\0')
-				return 1;
-		}
-		// diagonal
-		if (position[1] == position[5] && position[1] == position[9] && position[1] != '\0')
-			return 1;
-		if (position[3] == position[5] && position[3] == position[7] && position[3] != '\0')
-			return 1;
-		// for tie and change turn
-		boolean b = false;
+		
+	
+	public List<Integer> cheats(char c) {
+		List<List<Integer>> willWinHori = Arrays.asList(Arrays.asList(1, 2), Arrays.asList(2, 3), Arrays.asList(1, 3),
+				Arrays.asList(4, 5), Arrays.asList(5, 6), Arrays.asList(4, 6), Arrays.asList(7, 8), Arrays.asList(8, 9),
+				Arrays.asList(7, 9));
+		List<List<Integer>> willWinVerti = Arrays.asList(Arrays.asList(1, 4), Arrays.asList(4, 7), Arrays.asList(1, 7),
+				Arrays.asList(2, 5), Arrays.asList(5, 8), Arrays.asList(2, 8), Arrays.asList(3, 6), Arrays.asList(6, 9),
+				Arrays.asList(3, 9));
+		List<List<Integer>> willWinDiagonal = Arrays.asList(Arrays.asList(1, 5), Arrays.asList(5, 9),
+				Arrays.asList(1, 9), Arrays.asList(3, 5), Arrays.asList(5, 7), Arrays.asList(3, 7));
+		List<Integer> positions = new ArrayList<Integer>();
+		List<Integer> reqPos = new ArrayList<Integer>();
 		for (int i = 1; i < 10; i++) {
-			if (position[i] == '\0') {
-				b = true;
-				break;
+			if (position[i] == c) {
+				positions.add(i);
 			}
 		}
-		if (b)
-			return 3;// change turn
-		else
-			return 2;// tie
+		for (List<Integer> l : willWinHori) {
+			for (List<Integer> l1 : winningHorizontal) {
 
+				if (positions.containsAll(l) && l1.containsAll(l))
+					reqPos.add(l1.stream().reduce(0, (n1, n2) -> n1 + n2)
+							- positions.stream().reduce(0, (n1, n2) -> n1 + n2));
+			}
+		}
+		for (List<Integer> l : willWinVerti) {
+			for (List<Integer> l1 : winningVertical) {
+
+				if (positions.containsAll(l) && l1.containsAll(l))
+					reqPos.add(l1.stream().reduce(0, (n1, n2) -> n1 + n2)
+							- positions.stream().reduce(0, (n1, n2) -> n1 + n2));
+			}
+		}
+		for (List<Integer> l : willWinDiagonal) {
+			for (List<Integer> l1 : winningDiagonal) {
+
+				if (positions.containsAll(l) && l1.containsAll(l))
+					reqPos.add(l1.stream().reduce(0, (n1, n2) -> n1 + n2)
+							- positions.stream().reduce(0, (n1, n2) -> n1 + n2));
+			}
+		}
+		return reqPos.stream().filter(n->this.isEmpty(n)).collect(Collectors.toList());
+
+	}
+	public boolean isEmpty(int pos) {
+		if(position[pos]=='\0')
+			return true;
+		else 
+			return false;
 	}
 
 	public static void main(String[] args) {
@@ -162,7 +230,7 @@ public class TicTacToeGame {
 		default:
 			System.out.println("No option");
 		}
-		boolean playerTurn;
+		boolean playerTurnDone;
 		if (playerStart) {
 			char op = t.chooseOption();
 			if (op != '\0')
@@ -171,31 +239,49 @@ public class TicTacToeGame {
 			t.compOp = t.playerOp == 'O' ? 'X' : 'O';
 			t.movePlayer(t);
 			t.showBoard();
-			playerTurn = true;
+			playerTurnDone = true;
 		} else {
 			t.compOp = 'X';
 			t.playerOp = 'O';
 			t.moveComp(t);
 			t.showBoard();
-			playerTurn = false;
+			playerTurnDone = false;
 		}
-		while (t.winOrNot(t) == 3) {
-			if (playerTurn) {
-				t.moveComp(t);
-				playerTurn = false;
-				t.showBoard();
-				if (t.winOrNot(t) == 2) {
+		boolean continueGame = true;
+		while (continueGame) {
+			if (playerTurnDone) {
+				switch (t.winOrNot(t, t.playerOp)) {
+				case 1:
+					System.out.println("Player Wins!");
+					continueGame = false;
+					break;
+				case 2:
 					System.out.println("Tie");
-				} else if (t.winOrNot(t) == 1)
-					System.out.println("Player Wins.");
+					continueGame = false;
+					break;
+				case 3:
+					t.moveComp(t);
+					playerTurnDone = false;
+					t.showBoard();
+					break;
+				}
 			} else {
-				t.movePlayer(t);
-				playerTurn = true;
-				t.showBoard();
-				if (t.winOrNot(t) == 2) {
+				switch (t.winOrNot(t, t.compOp)) {
+				case 1:
+					System.out.println("Computer Wims!");
+					continueGame = false;
+					break;
+				case 2:
 					System.out.println("Tie");
-				} else if (t.winOrNot(t) == 1)
-					System.out.println("Computer Wins.");
+					continueGame = false;
+					break;
+				case 3:
+					System.out.println("You can Move to these locations: "+t.cheats(t.compOp));
+					t.movePlayer(t);
+					playerTurnDone = true;
+					t.showBoard();
+					break;
+				}
 			}
 		}
 	}

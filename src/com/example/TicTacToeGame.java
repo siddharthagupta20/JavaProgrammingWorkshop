@@ -208,16 +208,44 @@ public class TicTacToeGame {
 		return corners;
 	}
 
+	public int takingCentre() {
+		if (position[5] == '\0')
+			return 5;
+		else
+			return 0;
+	}
+
+	public List<Integer> takingSides() {
+		List<Integer> sides = new ArrayList<Integer>();
+		if (position[2] == '\0')
+			sides.add(2);
+		if (position[4] == '\0')
+			sides.add(4);
+		if (position[6] == '\0')
+			sides.add(6);
+		if (position[8] == '\0')
+			sides.add(8);
+		return sides;
+
+	}
+
 	public void movingLogic(TicTacToeGame t, char c) {
 		if (!t.cheats(c).isEmpty())
 			System.out.println("Take these positions immediatly: " + t.cheats(c));
 		else {
 			if (!t.takingCorners().isEmpty())
 				System.out.println("Choose corners: " + t.takingCorners());
-			else
-				System.out.println("Move Anywhere. Be offensive!!!");
+			else {
+				if (t.takingCentre() == 5)
+					System.out.println("Take centre.");
+				else {
+					if (!t.takingSides().isEmpty())
+						System.out.println("Take sides: " + t.takingSides());
+					else
+						System.out.println("Move Anywhere. Be offensive!!!");
+				}
+			}
 		}
-
 	}
 
 	public boolean isEmpty(int pos) {
@@ -290,7 +318,7 @@ public class TicTacToeGame {
 			} else {
 				switch (t.winOrNot(t, t.compOp)) {
 				case 1:
-					System.out.println("Computer Wims!");
+					System.out.println("Computer Wins!");
 					continueGame = false;
 					break;
 				case 2:

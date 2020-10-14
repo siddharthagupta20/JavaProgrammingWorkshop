@@ -85,7 +85,7 @@ public class TicTacToeGame {
 
 	public void moveComp(TicTacToeGame t) {
 
-		int move = r.nextInt(9)+1;
+		int move = r.nextInt(9) + 1;
 		for (int i = 1; i < 10; i++) {
 			while (move == 0)
 				move = r.nextInt(10);
@@ -113,14 +113,12 @@ public class TicTacToeGame {
 
 	public int winOrNot(TicTacToeGame t, char c) {
 		// for winning
-
 		List<Integer> positions = new ArrayList<Integer>();
 		for (int i = 1; i < 10; i++) {
 			if (position[i] == c) {
 				positions.add(i);
 			}
 		}
-		System.out.println(positions);
 
 		// horizontal
 		for (List<Integer> l : winningHorizontal) {
@@ -170,27 +168,24 @@ public class TicTacToeGame {
 			for (List<Integer> l1 : winningHorizontal) {
 
 				if (positions.containsAll(l) && l1.containsAll(l))
-					reqPos.add(l1.stream().reduce(0, (n1, n2) -> n1 + n2)
-							- positions.stream().reduce(0, (n1, n2) -> n1 + n2));
+					reqPos.add(l1.stream().reduce(0, (n1, n2) -> n1 + n2) - l.stream().reduce(0, (n1, n2) -> n1 + n2));
 			}
 		}
 		for (List<Integer> l : willWinVerti) {
 			for (List<Integer> l1 : winningVertical) {
 
 				if (positions.containsAll(l) && l1.containsAll(l))
-					reqPos.add(l1.stream().reduce(0, (n1, n2) -> n1 + n2)
-							- positions.stream().reduce(0, (n1, n2) -> n1 + n2));
+					reqPos.add(l1.stream().reduce(0, (n1, n2) -> n1 + n2) - l.stream().reduce(0, (n1, n2) -> n1 + n2));
 			}
 		}
 		for (List<Integer> l : willWinDiagonal) {
 			for (List<Integer> l1 : winningDiagonal) {
 
 				if (positions.containsAll(l) && l1.containsAll(l))
-					reqPos.add(l1.stream().reduce(0, (n1, n2) -> n1 + n2)
-							- positions.stream().reduce(0, (n1, n2) -> n1 + n2));
+					reqPos.add(l1.stream().reduce(0, (n1, n2) -> n1 + n2) - l.stream().reduce(0, (n1, n2) -> n1 + n2));
 			}
 		}
-		return reqPos.stream().filter(n -> this.isEmpty(n)).collect(Collectors.toList());
+		return reqPos.stream().filter(this::isEmpty).collect(Collectors.toList());
 
 	}
 
@@ -298,7 +293,7 @@ public class TicTacToeGame {
 			playerTurnDone = false;
 		}
 		boolean continueGame = true;
-		while (continueGame) {//condition for continuing game till win or tie 
+		while (continueGame) {// condition for continuing game till win or tie
 			if (playerTurnDone) {
 				switch (t.winOrNot(t, t.playerOp)) {
 				case 1:
